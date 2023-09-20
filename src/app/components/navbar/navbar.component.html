@@ -1,0 +1,45 @@
+<div class="card">
+    <p-menubar>
+        <ng-template pTemplate="start">
+            <p-sidebar [(visible)]="sidebarVisible" class="pl-3">
+                <div class="flex justify-content-center">
+                    <p-image src="../../../assets/logo.jpg" alt="Image" width="280" height="200"></p-image>
+                </div>
+                <!-- Acceuil -->
+                <p-divider align="center">
+                    <div class="p-tag inline-flex align-items-center">
+                        <b>Accueil</b>
+                    </div>
+                </p-divider>
+                <button pButton pRipple label="Accueil" icon="pi pi-home" class="ml-4 custom-button" routerLink="/home"></button>
+                <!-- Production -->
+                <p-divider align="center">
+                    <div class="p-tag inline-flex align-items-center">
+                        <b>Production</b>
+                    </div>
+                </p-divider>
+                <button pButton pRipple label="Catégorie" icon="pi pi-tags" class="ml-4 custom-button mb-2" routerLink="/categorie"></button>
+                <button pButton pRipple label="Marque" icon="pi pi-flag-fill" class="ml-4 custom-button mb-2" routerLink="/marque"></button>
+                <button pButton pRipple label="Produit" icon="pi pi-box" class="ml-4 custom-button mb-2" routerLink="/produit"></button>
+                <button pButton pRipple label="Stock" icon="pi pi-database" class="ml-4 custom-button mb-2" routerLink="/stock"></button>
+                <!-- Vente -->
+                <p-divider align="center">
+                    <div class="p-tag inline-flex align-items-center">
+                        <b>Vente</b>
+                    </div>
+                </p-divider>
+                <button pButton pRipple label="Article Commandé" icon="pi pi-shopping-cart" class="ml-4 custom-button mb-2" routerLink="/article_commande"></button>
+                <button pButton pRipple label="Client" icon="pi pi-user" class="ml-4 custom-button mb-2" routerLink="/client"></button>
+                <button pButton pRipple label="Commande" icon="pi pi-inbox" class="ml-4 custom-button mb-2" routerLink="/order"></button>
+                <button pButton pRipple label="Employé" icon="pi pi-user" class="ml-4 custom-button mb-2" routerLink="/employe"></button>
+                <button pButton pRipple label="Magasin" icon="pi pi-building" class="ml-4 custom-button mb-2" routerLink="/store"></button>
+            </p-sidebar>
+            <p-button (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
+        </ng-template>
+        <ng-template pTemplate="end">
+            <div class="card" class="mt-1">
+            <p-chip label="Mouhamadou Naby DIA" image="../assets/avatar.png"></p-chip>
+            </div>
+        </ng-template>
+    </p-menubar>
+</div>
