@@ -22,8 +22,6 @@ export class StoreService {
   constructor(private client: HttpClient) {}
 
   getStores(): Observable<IStore[]> {
-    return this.client.get<IStore[]>(this.store_endpoint, httpOptions).pipe(
-      tap(response => console.log(response))
-    );
+    return this.client.get<IStore[]>(this.store_endpoint, httpOptions);
   }
 }

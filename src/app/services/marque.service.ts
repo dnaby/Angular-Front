@@ -47,11 +47,4 @@ export class MarqueService {
       httpOptions
     );
   }
-
-  findMarque(marque: IMarque): Observable<any> {
-    return this.client.get(
-      `${this.marque_endpoint}/byname/${encodeURIComponent(marque.nom!)}`,
-      httpOptions
-    );
-  }
 }

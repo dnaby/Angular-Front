@@ -40,6 +40,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
 import { MarqueService } from './services/marque.service';
 import { FormsModule } from '@angular/forms';
+import { CategorieService } from './services/categorie.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { FormsModule } from '@angular/forms';
     MessageService, 
     ConfirmationService, 
     StoreService,
-    MarqueService
+    MarqueService,
+    CategorieService
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

@@ -14,54 +14,58 @@ export class CategorieComponent implements OnInit {
   categorie!: ICategorie;
   selectedCategories!: ICategorie[] | null;
   submitted: boolean = false;
-  sortOrder!: number;
-  sortField!: string;
 
   constructor(private categorieService: CategorieService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
+    this.getCategories();
+  }
+
+  getCategories() {
     this.categorieService.getCategories().subscribe({
       next: (value: ICategorie[]) => {
         this.categories = value;
-        console.log(value)
       },
       error: (error: any) => {
-        this.messageService.add({ severity: 'error', summary: error.name, detail: error.message });
-        console.error(error);
-      },
-      complete: () => {
-        // Callback pour la complétion (complete)
+        if (error.status == 500) {
+          this.messageService.add({ severity: 'error', summary: "Get Marques Error", detail: "There must be a problem with the Services !" });
+        } else {
+          this.messageService.add({ severity: 'error', summary: error.statusText, detail: error.message }); 
+        }
       }
-    })
+    });
   }
-  
+
   openNew() {
     this.categorie = {};
     this.submitted = false;
     this.categorieDialog = true;
   }
 
-  deleteSelectedCategories() {
-    this.confirmationService.confirm({
-      message: 'Etes-vous sûr de vouloir supprimer ce(s) Categorie(s) ?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-          
-      }
-  });
+  editCategorie(categorie: ICategorie) {
+    this.categorie = { ...categorie };
+    this.categorieDialog = true;
   }
-
-  editCategorie(categorie: ICategorie) {}
 
   deleteCategorie(categorie: ICategorie) {
     this.confirmationService.confirm({
-      message: 'Es-tu sûr de vouloir supprimer le magasin ' + categorie.nom + '?',
+      message: 'Etes-vous sûr de vouloir supprimer la catégorie ' + categorie.nom + '?',
       header: 'Confirmmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.categorieService.deleteCategorie(categorie).subscribe({
+          next: (value) => {
+            this.categories = this.categories.filter((val) => val.id !== categorie.id);
+            this.categorie = {};
+            this.messageService.add({ severity: 'success', summary: "Success", detail: value.msg });
+          },
+          error: (error) => {
+            if (error.status == 404) { this.messageService.add({ severity: 'warn', summary: error.statusText, detail: error.error.msg }); }
+            else {this.messageService.add({ severity: 'error', summary: error.statusText, detail: error.message });}
+          }
+        })
       }
-  });
+    });
   }
 
   hideDialog() {
@@ -69,12 +73,48 @@ export class CategorieComponent implements OnInit {
     this.submitted = false;
   }
 
-  saveCategorie() {}
+  saveCategorie() {
+    this.submitted = true;
 
-  onInputChange(event: Event, dt: any) {
-    if (event.target instanceof HTMLInputElement) {
-      const inputValue = event.target.value;
-      return dt.filterGlobal(inputValue, 'contains');
+    if (this.categorie.id) {
+      this.categorieService.updateCategorie(this.categorie).subscribe({
+        next: (value) => {
+          this.categories[this.findIndexById(this.categorie.id!)] = value.categorie;
+          this.categories = [...this.categories];
+          this.categorieDialog = false;
+          this.categorie = {};
+          this.messageService.add({ severity: 'success', summary: "Success", detail: value.msg });
+        },
+        error: (error) => {
+          if (error.status == 404 || error.status == 409) { this.messageService.add({ severity: 'warn', summary: error.statusText, detail: error.error.msg }); }
+          else {this.messageService.add({ severity: 'error', summary: error.statusText, detail: error.message });}
+        }
+      });
+    } else {
+      this.categorieService.createNewCategorie(this.categorie).subscribe({
+        next: (value) => {
+          this.categories.push(value.categorie);
+          this.categories = [...this.categories];
+          this.categorieDialog = false;
+          this.categorie = {};
+          this.messageService.add({ severity: 'success', summary: "Success", detail: value.msg });
+        },
+        error: (error) => {
+          if (error.status == 409) { this.messageService.add({ severity: 'warn', summary: error.statusText, detail: error.error.msg }); }
+          else {this.messageService.add({ severity: 'error', summary: error.statusText, detail: error.message });}
+        }
+      });
     }
+  }
+
+  findIndexById(id: number): number {
+    let index = -1;
+    for (let i = 0; i < this.categories.length; i++) {
+        if (this.categories[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+    return index;
   }
 }

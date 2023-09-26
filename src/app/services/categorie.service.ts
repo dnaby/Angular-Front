@@ -22,8 +22,29 @@ export class CategorieService {
   constructor(private client: HttpClient) {}
 
   getCategories(): Observable<ICategorie[]> {
-    return this.client.get<ICategorie[]>(this.categorie_endpoint, httpOptions).pipe(
-      tap(response => console.log(response))
+    return this.client.get<ICategorie[]>(this.categorie_endpoint, httpOptions);
+  }
+
+  createNewCategorie(categorie: ICategorie): Observable<any> {
+    return this.client.post(
+        this.categorie_endpoint,
+        { nom: categorie.nom },
+        httpOptions 
+    );
+  }
+
+  deleteCategorie(categorie: ICategorie): Observable<any> {
+    return this.client.delete(
+      this.categorie_endpoint + '/' + categorie.id,
+      httpOptions
+    );
+  }
+
+  updateCategorie(categorie: ICategorie): Observable<any> {
+    return this.client.put(
+      this.categorie_endpoint + '/' + categorie.id,
+      { nom: categorie.nom },
+      httpOptions
     );
   }
 }

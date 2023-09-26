@@ -50,7 +50,7 @@ export class MarqueComponent implements OnInit {
 
   deleteMarque(marque: IMarque) {
     this.confirmationService.confirm({
-      message: 'Es-tu sûr de vouloir supprimer la marque ' + marque.nom + '?',
+      message: 'Etes-vous sûr de vouloir supprimer la marque ' + marque.nom + '?',
       header: 'Confirmmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -117,5 +117,5 @@ export class MarqueComponent implements OnInit {
         }
     }
     return index;
-}
+  }
 }
