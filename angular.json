@@ -25,7 +25,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/vela-blue/theme.css",
+              "node_modules/primeng/resources/themes/vela-orange/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -47,7 +47,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "buildOptimizer": false,
@@ -58,7 +64,7 @@
               "namedChunks": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

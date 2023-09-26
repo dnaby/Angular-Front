@@ -1,1 +1,54 @@
-<p>categorie works!</p>
+<div class="card">
+    <p-toast></p-toast>
+
+    <!-- Toolbar -->
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <!-- Dataview -->
+    <p-dataView #dv [value]="categories" [layout]="layout" [rows]="4" [paginator]="true">
+        <ng-template pTemplate="header">
+            <div class="d-flex justify-content-end">
+                <p-dataViewLayoutOptions [layout]="layout"></p-dataViewLayoutOptions>
+            </div>
+        </ng-template>
+
+        <!-- List Item -->
+        <ng-template let-categorie pTemplate="listItem">
+            <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-3">
+                <div class="card" style="background-color: rgb(171, 168, 168);">
+                    <div class="card-body">
+                        <span class="card-title" style="color: black;">{{ categorie.id }}. {{ categorie.nom }}</span>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-3"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <!-- Grid Item -->
+        <ng-template let-categorie pTemplate="gridItem">
+            <div class="col-3 sm:col-6 lg:col-12 xl:col-4 p-2">
+                <div class="card" style="background-color: rgb(171, 168, 168);">
+                    <div class="card-body">
+                        <span class="card-title" style="color: black;">{{ categorie.id }}. {{ categorie.nom }}</span>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-3"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+<!-- Dialog Module -->
+<p-dialog [(visible)]="categorieDialog" [style]="{ width: '650px'}" header="Categorie" [modal]="true" styleClass="p-fluid">
+    
+</p-dialog>

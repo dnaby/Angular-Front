@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'order', component: CommandeComponent, title: 'Order Page' },
   { path: 'employe', component: EmployeComponent, title: 'Employe Page' },
   { path: 'store', component: MagasinComponent, title: 'Store Page' },
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  { path: '',   redirectTo: '/store', pathMatch: 'full' },
   { path: '**', component: NotfoundComponent, title: 'Not Found Page' }
 ];
 

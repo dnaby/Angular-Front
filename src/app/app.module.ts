@@ -1,4 +1,4 @@
-import { NgModule, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -13,12 +13,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { GalleriaModule } from 'primeng/galleria';
-import { PhotoService } from 'src/service/photo.service';
+import { PhotoService } from 'src/app/services/photo.service';
 import { ImageModule } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
-import { PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
+import { DataViewLayoutOptions } from 'primeng/dataview';
 import { CommandeComponent } from './components/commande/commande.component';
 import { CategorieComponent } from './components/categorie/categorie.component';
 import { MarqueComponent } from './components/marque/marque.component';
@@ -29,6 +30,16 @@ import { ClientComponent } from './components/client/client.component';
 import { EmployeComponent } from './components/employe/employe.component';
 import { MagasinComponent } from './components/magasin/magasin.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { StoreService } from './services/store.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CardModule } from 'primeng/card';
+import { MarqueService } from './services/marque.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -59,10 +70,25 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     ImageModule,
     DividerModule,
     TableModule,
-    DataViewModule
+    DataViewModule,
+    HttpClientModule,
+    ToastModule,
+    ToolbarModule,
+    InputTextModule,
+    DialogModule,
+    ConfirmDialogModule,
+    CardModule,
+    FormsModule
   ],
-  providers: [PhotoService],
-  bootstrap: [AppComponent]
+  providers: [
+    PhotoService, 
+    MessageService, 
+    ConfirmationService, 
+    StoreService,
+    MarqueService
+  ],
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule implements OnInit { 
   constructor(private primengConfig: PrimeNGConfig) {}
