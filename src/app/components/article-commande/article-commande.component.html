@@ -1,1 +1,115 @@
-<p>article-commande works!</p>
+<div class="card">
+    <p-toast></p-toast>
+
+    <!-- Toolbar -->
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedArticleCommandes()" [disabled]="!selectedArticleCommandes || !selectedArticleCommandes.length"></button>
+        </ng-template>
+    </p-toolbar>
+    
+    <!-- Table -->
+    <p-table
+        #dt
+        [value]="articleCommandes"
+        [rows]="7"
+        [paginator]="true"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedArticleCommandes"
+        [rowHover]="true"
+        dataKey="id"
+        styleClass="p-datatable-gridlines"
+        currentPageReportTemplate="{first} à {last} de {totalRecords} entrées"
+        [showCurrentPageReport]="true"
+        [globalFilterFields]="['numero_commande', 'ligne', 'produit', 'quantite', 'prix_depart', 'remise']"
+        [responsive]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="m-0" style="color: rgba(255, 255, 255, 0.87);">Gestions des Articles Commandés</span>
+                <span class="d-flex justify-content-between">
+                    <input type="text" pInputText (input)="onInputChange($event, dt)" placeholder="Rechercher..." style="margin-right: -2px;" />
+                    <p-button icon="pi pi-search"></p-button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem;">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="numero_commande">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Numero Commande
+                        <p-sortIcon field="numero_commande"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="numero_commande" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="ligne">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Ligne
+                        <p-sortIcon field="ligne"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="ligne" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="produit">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Produit
+                        <p-sortIcon field="produit"></p-sortIcon>
+                        <p-columnFilter type="text" field="produit" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="quantite">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Quantité
+                        <p-sortIcon field="quantite"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="quantite" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="prix_depart">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Prix Départ
+                        <p-sortIcon field="prix_depart"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="prix_depart" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="remise">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Remise
+                        <p-sortIcon field="remise"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="remise" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th>MAJ-Supprimer</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-articleCommande>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="articleCommande"></p-tableCheckbox>
+                </td>
+                <td>{{ articleCommande.id.numero_commande }}</td>
+                <td>{{ articleCommande.id.ligne }}</td>
+                <td>{{ articleCommande.produit.nom }}</td>
+                <td>{{ articleCommande.quantite }}</td>
+                <td>{{ articleCommande.prixDepart }}</td>
+                <td>{{ articleCommande.remise }}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-3" (click)="editArticleCommande(articleCommande)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteArticleCommande(articleCommande)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="d-flex align-items-center justify-content-center" style="color: rgba(199, 196, 196, 0.87);"><i>{{ articleCommandes ? articleCommandes.length : 0 }} articles commandés au Total</i></div>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- Dialog Module -->
+<p-dialog [(visible)]="articleCommandeDialog" [style]="{ width: '650px'}" header="Article Commandé" [modal]="true" styleClass="p-fluid">
+    
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '650px' }"></p-confirmDialog>

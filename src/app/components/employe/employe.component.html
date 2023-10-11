@@ -1,1 +1,131 @@
-<p>employe works!</p>
+<div class="card">
+    <p-toast></p-toast>
+
+    <!-- Toolbar -->
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedEmployes()" [disabled]="!selectedEmployes || !selectedEmployes.length"></button>
+        </ng-template>
+    </p-toolbar>
+    
+    <!-- Table -->
+    <p-table
+        #dt
+        [value]="employes"
+        [rows]="7"
+        [paginator]="true"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedEmployes"
+        [rowHover]="true"
+        dataKey="id"
+        styleClass="p-datatable-gridlines"
+        currentPageReportTemplate="{first} à {last} de {totalRecords} entrées"
+        [showCurrentPageReport]="true"
+        [globalFilterFields]="['id', 'prenom', 'nom', 'email', 'telephone', 'actif', 'magasin.nom', 'manager']"
+        [responsive]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="m-0" style="color: rgba(255, 255, 255, 0.87);">Gestions des Employés</span>
+                <span class="d-flex justify-content-between">
+                    <input type="text" pInputText (input)="onInputChange($event, dt)" placeholder="Rechercher..." style="margin-right: -2px;" />
+                    <p-button icon="pi pi-search"></p-button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem;">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id">
+                    <div class="d-flex justify-content-between align-items-center">
+                        ID
+                        <p-sortIcon field="id"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="id" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="prenom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Prenom
+                        <p-sortIcon field="prenom"></p-sortIcon>
+                        <p-columnFilter type="text" field="prenom" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="nom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Nom
+                        <p-sortIcon field="nom"></p-sortIcon>
+                        <p-columnFilter type="text" field="nom" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="email">
+                    <div class="d-flex justify-content-between align-items-center">
+                        E-mail
+                        <p-sortIcon field="adresse"></p-sortIcon>
+                        <p-columnFilter type="text" field="email" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="telephone">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Telephone
+                        <p-sortIcon field="telephone"></p-sortIcon>
+                        <p-columnFilter type="text" field="telephone" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="actif">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Actif
+                        <p-sortIcon field="actif"></p-sortIcon>
+                        <p-columnFilter type="numeric" field="actif" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="magasin.nom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Magasin
+                        <p-sortIcon field="magasin.nom"></p-sortIcon>
+                        <p-columnFilter type="text" field="magasin.nom" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="manager">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Manager
+                        <p-sortIcon field="manager"></p-sortIcon>
+                        <p-columnFilter type="text" field="manager" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th>MAJ-Supprimer</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employe>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="employe"></p-tableCheckbox>
+                </td>
+                <td>{{ employe.id }}</td>
+                <td>{{ employe.prenom }}</td>
+                <td>{{ employe.nom }}</td>
+                <td>{{ employe.email }}</td>
+                <td>{{ employe.telephone }}</td>
+                <td>{{ employe.actif }}</td>
+                <td>{{ employe.magasin.nom }}</td>
+                <td>{{ employe.manager?.prenom }} {{ employe.manager?.nom }}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-3" (click)="editEmploye(employe)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEmploye(employe)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="d-flex align-items-center justify-content-center" style="color: rgba(199, 196, 196, 0.87);"><i>{{ employes ? employes.length : 0 }} employés au Total</i></div>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- Dialog Module -->
+<p-dialog [(visible)]="employeDialog" [style]="{ width: '650px'}" header="Employé" [modal]="true" styleClass="p-fluid">
+    
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '650px' }"></p-confirmDialog>

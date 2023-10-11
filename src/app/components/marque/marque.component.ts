@@ -111,10 +111,10 @@ export class MarqueComponent implements OnInit {
   findIndexById(id: number): number {
     let index = -1;
     for (let i = 0; i < this.marques.length; i++) {
-        if (this.marques[i].id == id) {
-            index = i;
-            break;
-        }
+      if (this.marques[i].id == id) {
+          index = i;
+          break;
+      }
     }
     return index;
   }

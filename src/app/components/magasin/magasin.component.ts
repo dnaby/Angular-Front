@@ -18,6 +18,10 @@ export class MagasinComponent implements OnInit {
   constructor(private storeService: StoreService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
+    this.getStores();
+  }
+
+  getStores() {
     this.storeService.getStores().subscribe({
       next: (value: IStore[]) => {
         this.stores = value;
@@ -29,7 +33,7 @@ export class MagasinComponent implements OnInit {
       complete: () => {
         // Callback pour la complétion (complete)
       }
-    })
+    });
   }
 
   openNew() {

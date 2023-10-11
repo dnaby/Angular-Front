@@ -1,1 +1,67 @@
-<p>stock works!</p>
+<div class="card">
+    <p-toast></p-toast>
+
+    <!-- Toolbar -->
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <!-- Dataview -->
+    <p-dataView #dv [value]="stocks" [layout]="layout" [rows]="2" [paginator]="true">
+        <ng-template pTemplate="header">
+            <div class="d-flex justify-content-end">
+                <p-dataViewLayoutOptions [layout]="layout"></p-dataViewLayoutOptions>
+            </div>
+        </ng-template>
+
+        <!-- List Item -->
+        <ng-template let-stock pTemplate="listItem">
+            <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-3">
+                <div class="card" style="background-color: rgb(171, 168, 168);">
+                    <div class="card-body">
+                        <p class="card-title" style="color: black;">🏦Magasin: {{ stock.magasin.nom }}</p>
+                        <p class="card-title" style="color: black;">🚲: {{ stock.produit.nom }}</p>
+                        <p class="card-title" style="color: black;">📦Magasin: {{ stock.quantite }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-3" (click)="editStock(stock)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteStock(stock)"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <!-- Grid Item -->
+        <ng-template let-stock pTemplate="gridItem">
+            <div class="col-6 sm:col-6 lg:col-12 xl:col-4 p-2">
+                <div class="card" style="background-color: rgb(171, 168, 168);">
+                    <div class="card-body">
+                        <p class="card-title" style="color: black;">🏦Magasin: {{ stock.magasin.nom }}</p>
+                        <p class="card-title" style="color: black;">🚲: {{ stock.produit.nom }}</p>
+                        <p class="card-title" style="color: black;">📦Magasin: {{ stock.quantite }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-3" (click)="editStock(stock)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteStock(stock)"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+<!-- Dialog Module -->
+<p-dialog [(visible)]="stockDialog" [style]="{ width: '650px'}" header="Stock" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveMarque()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '650px' }"></p-confirmDialog>

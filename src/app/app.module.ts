@@ -19,7 +19,6 @@ import { DividerModule } from 'primeng/divider';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
-import { DataViewLayoutOptions } from 'primeng/dataview';
 import { CommandeComponent } from './components/commande/commande.component';
 import { CategorieComponent } from './components/categorie/categorie.component';
 import { MarqueComponent } from './components/marque/marque.component';
@@ -41,6 +40,12 @@ import { CardModule } from 'primeng/card';
 import { MarqueService } from './services/marque.service';
 import { FormsModule } from '@angular/forms';
 import { CategorieService } from './services/categorie.service';
+import { ProductService } from './services/produit.service';
+import { StockService } from './services/stock.service';
+import { EmployeService } from './services/employe.service';
+import { ClientService } from './services/client.service';
+import { CommandeService } from './services/commande.service';
+import { ArticleCommandeService } from './services/article_commande.service';
 
 @NgModule({
   declarations: [
@@ -87,7 +92,13 @@ import { CategorieService } from './services/categorie.service';
     ConfirmationService, 
     StoreService,
     MarqueService,
-    CategorieService
+    CategorieService,
+    ProductService,
+    StockService,
+    EmployeService,
+    ClientService,
+    CommandeService,
+    ArticleCommandeService
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
@@ -98,4 +109,4 @@ export class AppModule implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
   }
- }
+}
